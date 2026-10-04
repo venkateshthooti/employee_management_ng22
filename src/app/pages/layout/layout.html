@@ -1,0 +1,92 @@
+
+<mat-sidenav-container class="sidenav-container">
+    {{ sidenav }}
+
+    <!-- Side Navigation -->
+    <mat-sidenav #sidenav mode="side" opened>
+
+        <!-- Sidebar Header -->
+        <div class="sidebar-header">
+
+            <h2>Employee Management</h2>
+
+            <!-- Close Icon -->
+            <button mat-icon-button (click)="sidenav.close()">
+
+                <mat-icon>close</mat-icon>
+
+            </button>
+
+        </div>
+
+        <!-- Menu -->
+        <div class="menu">
+
+            <button mat-button>
+                <mat-icon>dashboard</mat-icon>
+                Dashboard
+            </button>
+
+            <button mat-button>
+                <mat-icon>people</mat-icon>
+                Employees
+            </button>
+
+            <button mat-button>
+                <mat-icon>business</mat-icon>
+                Departments
+            </button>
+
+            <button mat-button>
+                <mat-icon>event</mat-icon>
+                Attendance
+            </button>
+
+            <button mat-button>
+                <mat-icon>assessment</mat-icon>
+                Reports
+            </button>
+
+            <button mat-button>
+                <mat-icon>settings</mat-icon>
+                Settings
+            </button>
+
+        </div>
+
+    </mat-sidenav>
+
+
+    <!-- Main Content -->
+    <mat-sidenav-content>
+
+        <!-- Top Toolbar -->
+        <mat-toolbar>
+
+            <!-- Menu Icon -->
+            <button mat-icon-button (click)="sidenav.toggle()">
+
+                <mat-icon>menu</mat-icon>
+
+            </button>
+
+            <span>Employee Management</span>
+
+        </mat-toolbar>
+
+
+        <!-- Page Content -->
+        <div class="content">
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Welcome to Employee Management System.
+            </p>
+            <router-outlet></router-outlet>
+
+        </div>
+
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
