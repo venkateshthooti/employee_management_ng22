@@ -1,48 +1,158 @@
-.sidenav-container {
-  height: 100vh;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
+
+.sidenav-container {
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ================================
+   LEFT SIDEBAR
+================================ */
 
 mat-sidenav {
-  width: 270px;
+    width: 270px;
+    height: 100vh;
+    overflow: hidden;
+    border-right: 1px solid #e0e0e0;
 }
 
+/* Sidebar Header */
 .sidebar-header {
-  height: 64px;
+    height: 64px;
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  padding: 0 10px 0 20px;
+    padding: 0 12px 0 20px;
+    margin: 0;
+
+    border-bottom: 1px solid #e0e0e0;
+
+    h2 {
+      
+        margin: 0;
+        font-size: 20px;
+        font-weight: 500;
+    }
 }
 
-.sidebar-header h2 {
-  font-size: 18px;
-  margin: 0;
-}
+/* ================================
+   NAVIGATION MENU
+================================ */
 
 .menu {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
 }
 
-.menu button {
-  width: 100%;
-  justify-content: flex-start;
-  text-align: left;
-  margin-bottom: 5px;
+/* Anchor / Menu Items */
+.menu a {
+    height: 48px;
+
+    padding: 0 16px;
+    margin: 0;
+
+    border-radius: 0;
+
+    box-sizing: border-box;
 }
 
-.menu mat-icon {
-  margin-right: 12px;
+/* Material icon */
+.menu a mat-icon {
+    margin-right: 16px;
 }
+
+/* ================================
+   RIGHT SIDE
+================================ */
+
+mat-sidenav-content {
+    height: 100vh;
+    overflow: auto;
+}
+
+/* ================================
+   TOP TOOLBAR
+================================ */
 
 mat-toolbar {
-  display: flex;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+
+    .toolbar-spacer {
+        flex: 1 1 auto;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 5px 8px 5px 10px;
+        border-radius: 30px;
+
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .user-avatar {
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: white;
+        color: #3f51b5;
+
+        font-size: 14px;
+        font-weight: 600;
+
+        flex-shrink: 0;
+    }
+
+    .user-details {
+        display: flex;
+        flex-direction: column;
+
+        line-height: 1.2;
+        min-width: 90px;
+    }
+
+    .user-name {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .user-role {
+        font-size: 11px;
+        opacity: 0.8;
+        margin-top: 3px;
+    }
+
+    .logout-button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        color: white;
+    }
 }
 
+/* ================================
+   CONTENT
+================================ */
+
 .content {
-  padding: 30px;
+    padding: 24px;
 }
