@@ -1,88 +1,142 @@
-
 <mat-sidenav-container class="sidenav-container">
-    {{ sidenav }}
 
-    <!-- Side Navigation -->
-    <mat-sidenav #sidenav mode="side" opened>
+    
+   <!-- Side Navigation -->
+<mat-sidenav #sidenav mode="side" opened>
 
-        <!-- Sidebar Header -->
-        <div class="sidebar-header">
+    <!-- Sidebar Header -->
+    <mat-toolbar color="primary" class="sidebar-header">
 
-            <h2>Employee Management</h2>
+        <h2>Employee <br>Management</h2>
 
-            <!-- Close Icon -->
-            <button mat-icon-button (click)="sidenav.close()">
+        <button
+            mat-icon-button
+            aria-label="Close sidebar"
+            (click)="sidenav.close()">
 
-                <mat-icon>close</mat-icon>
+            <mat-icon>close</mat-icon>
 
-            </button>
+        </button>
 
-        </div>
+    </mat-toolbar>
 
-        <!-- Menu -->
-        <div class="menu">
+    <!-- Navigation Menu -->
+    <mat-nav-list class="menu">
 
-            <button mat-button>
-                <mat-icon>dashboard</mat-icon>
-                Dashboard
-            </button>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>dashboard</mat-icon>
+            <span matListItemTitle>Dashboard</span>
+        </a>
 
-            <button mat-button>
-                <mat-icon>people</mat-icon>
-                Employees
-            </button>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>people</mat-icon>
+            <span matListItemTitle>Employees</span>
+        </a>
 
-            <button mat-button>
-                <mat-icon>business</mat-icon>
-                Departments
-            </button>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>business</mat-icon>
+            <span matListItemTitle>Departments</span>
+        </a>
 
-            <button mat-button>
-                <mat-icon>event</mat-icon>
-                Attendance
-            </button>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>event</mat-icon>
+            <span matListItemTitle>Attendance</span>
+        </a>
 
-            <button mat-button>
-                <mat-icon>assessment</mat-icon>
-                Reports
-            </button>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>assessment</mat-icon>
+            <span matListItemTitle>Reports</span>
+        </a>
 
-            <button mat-button>
-                <mat-icon>settings</mat-icon>
-                Settings
-            </button>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>settings</mat-icon>
+            <span matListItemTitle>Settings</span>
+        </a>
 
-        </div>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>event</mat-icon>
+            <span matListItemTitle>Attendance</span>
+        </a>
 
-    </mat-sidenav>
+        <a mat-list-item>
+            <mat-icon matListItemIcon>assessment</mat-icon>
+            <span matListItemTitle>Reports</span>
+        </a>
+
+        <a mat-list-item>
+            <mat-icon matListItemIcon>settings</mat-icon>
+            <span matListItemTitle>Settings</span>
+        </a>
+
+    </mat-nav-list>
+
+</mat-sidenav>
 
 
     <!-- Main Content -->
     <mat-sidenav-content>
 
         <!-- Top Toolbar -->
-        <mat-toolbar>
 
-            <!-- Menu Icon -->
-            <button mat-icon-button (click)="sidenav.toggle()">
+
+        <mat-toolbar color="primary">
+
+            <!-- Menu -->
+            <button mat-icon-button aria-label="Toggle sidebar" (click)="sidenav.toggle()">
 
                 <mat-icon>menu</mat-icon>
 
             </button>
 
-            <span>Employee Management</span>
+
+            <!-- Push profile section to right -->
+            <span class="toolbar-spacer"></span>
+
+
+            <!-- User Profile -->
+            <div class="user-profile">
+
+                <!-- Two-letter avatar -->
+                <div class="user-avatar">
+                    <!-- {{ loggerUserData?.employeeName?.substring(0, 2)?.toUpperCase() }} -->
+                      {{ getUserInitials(loggerUserData?.employeeName || '') }}
+                </div>
+
+
+                <!-- User Details -->
+                <div class="user-details">
+
+                    <span class="user-name">
+                        {{ loggerUserData?.employeeName }}
+                    </span>
+
+                    <small class="user-role">
+                        {{ loggerUserData?.role }}
+                    </small>
+
+                </div>
+
+
+                <!-- Logout -->
+                <button mat-button class="logout-button" aria-label="Logout" (click)="onLogout()">
+
+                    <mat-icon>logout</mat-icon>
+
+                    <span>Logout</span>
+
+                </button>
+
+            </div>
 
         </mat-toolbar>
+
+
+
 
 
         <!-- Page Content -->
         <div class="content">
 
-            <h1>Dashboard</h1>
-
-            <p>
-                Welcome to Employee Management System.
-            </p>
             <router-outlet></router-outlet>
 
         </div>
