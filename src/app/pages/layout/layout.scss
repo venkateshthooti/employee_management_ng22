@@ -48,7 +48,7 @@ mat-sidenav {
 ================================ */
 
 .menu {
-    padding: 0;
+    padding: 16px;
     margin: 0;
     overflow: hidden;
 }
@@ -120,6 +120,9 @@ mat-toolbar {
 
         flex-shrink: 0;
     }
+    .title{
+        padding-left: 5px;
+    }
 
     .user-details {
         display: flex;
@@ -155,4 +158,32 @@ mat-toolbar {
 
 .content {
     padding: 24px;
+}
+
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+
+mat-sidenav-container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+mat-sidenav-content {
+  height: 100%;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-toolbar {
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
 }
