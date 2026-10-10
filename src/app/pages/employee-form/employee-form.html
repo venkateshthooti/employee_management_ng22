@@ -1,1 +1,283 @@
-<p>employee-form works!</p>
+<div class="employee-form">
+
+    <!-- Page Header -->
+    <div class="page-header">
+
+        <div>
+            <h2>Create Employee</h2>
+            <p>Add a new employee to the system</p>
+        </div>
+
+        <button mat-stroked-button type="button" (click)="goBack()">
+
+            <mat-icon>arrow_back</mat-icon>
+            Back
+
+        </button>
+
+    </div>
+
+
+    <!-- Employee Form -->
+    <form [formRoot]="employeeForm" (submit)="onSubmit($event)">
+
+        <mat-card>
+
+            <mat-card-header>
+
+                <mat-card-title>
+                    Employee Details
+                </mat-card-title>
+
+            </mat-card-header>
+
+            @if (formError()) {
+            <div class="alert alert-danger mx-3" role="alert">
+                {{ formError() }}
+            </div>
+            }
+
+            @if (formSuccess()) {
+            <div class="alert alert-success mx-3" role="status">
+                {{ formSuccess() }}
+            </div>
+            }
+
+            <mat-card-content>
+
+                <div class="form-grid">
+
+
+                    <!-- Employee Name -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Employee Name
+                        </mat-label>
+
+                        <input matInput [formField]="employeeForm.employeeName" placeholder="Enter employee name">
+
+                        @if (employeeForm.employeeName().invalid()) {
+
+                        <mat-error>
+                            Employee name is required
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+
+
+                    <!-- Contact Number -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Contact Number
+                        </mat-label>
+
+                        <input matInput type="tel" [formField]="employeeForm.contactNo"
+                            placeholder="Enter contact number" autocomplete="tel">
+
+                        @if (employeeForm.contactNo().invalid()) {
+
+                        <mat-error>
+                            Contact number is required
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+
+
+                    <!-- Email -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Email
+                        </mat-label>
+
+                        <input matInput type="email" [formField]="employeeForm.emailId" placeholder="Enter email">
+
+                        @if (employeeForm.emailId().invalid()) {
+
+                        <mat-error>
+                            Enter a valid email address
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+
+
+                    <!-- Department -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Department
+                        </mat-label>
+
+                        <mat-select (selectionChange)="onChangeParent($event)">
+                            @for (item of parentDetails(); track item.departmentId) {
+                            <mat-option [value]="item.departmentId">
+                                {{item.departmentName}}
+                            </mat-option>
+                            }
+
+                        </mat-select>
+
+                    </mat-form-field>
+                    <!--Child Department -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Department (Child)
+                        </mat-label>
+
+                        <mat-select [formField]="employeeForm.deptId">
+                            <mat-option [value]="0">
+                                Choose child department
+                            </mat-option>
+                            @for (item of childDetails(); track item.childDeptId) {
+                            <mat-option [value]="item.childDeptId">
+                                {{item.departmentName}}
+                            </mat-option>
+                            }
+
+                        </mat-select>
+
+                        @if (employeeForm.deptId().invalid()) {
+
+                        <mat-error>
+                            Choose a child department
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+
+
+                    <!-- Password -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Password
+                        </mat-label>
+
+                        <input matInput type="password" [formField]="employeeForm.password"
+                            placeholder="Enter password">
+
+                        @if (employeeForm.password().invalid()) {
+
+                        <mat-error>
+                            Password is required
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+
+
+                    <!-- Gender -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Gender
+                        </mat-label>
+
+                        <mat-select [formField]="employeeForm.gender">
+
+                            <mat-option value="Male">
+                                Male
+                            </mat-option>
+
+                            <mat-option value="Female">
+                                Female
+                            </mat-option>
+
+                            <mat-option value="Other">
+                                Other
+                            </mat-option>
+
+                        </mat-select>
+
+                        @if (employeeForm.gender().invalid()) {
+
+                        <mat-error>
+                            Gender is required
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+                    
+                    <!-- Role -->
+                    <mat-form-field appearance="outline">
+
+                        <mat-label>
+                            Role
+                        </mat-label>
+
+                        <mat-select [formField]="employeeForm.role">
+
+                            <mat-option value="Admin">
+                                Admin
+                            </mat-option>
+
+                            <mat-option value="Manager">
+                                Manager
+                            </mat-option>
+
+                            <mat-option value="Employee">
+                                Employee
+                            </mat-option>
+
+                        </mat-select>
+
+                        @if (employeeForm.role().invalid()) {
+
+                        <mat-error>
+                            Role is required
+                        </mat-error>
+
+                        }
+
+                    </mat-form-field>
+
+
+                </div>
+
+            </mat-card-content>
+
+
+            <!-- Actions -->
+
+            <mat-card-actions align="end">
+
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="employeeForm().invalid() || isSubmitting()">
+                    <mat-icon>save</mat-icon>
+                    {{ isSubmitting() ? 'Saving...' : 'Create Employee' }}
+                </button>
+
+                <button mat-button type="button" (click)="goBack()">
+
+                    Cancel
+
+                </button>
+
+            </mat-card-actions>
+        </mat-card>
+     <p>  employeeId :{{employeeForm.employeeId().invalid()}}</p>
+      <p>employeeName : {{employeeForm.employeeName().invalid()}}</p> 
+      
+      <p>employeeName : {{employeeForm.employeeName().invalid()}}</p>
+      <p>employeeName L: {{employeeForm.employeeName().invalid()}}</p>
+       <p>deptId: {{employeeForm.deptId().invalid()}}</p>
+      <p>password : {{employeeForm.password().invalid()}}</p>
+      <p> gender :{{employeeForm.gender().invalid()}}</p>
+       <p>role: {{employeeForm.role().invalid()}}</p>
+       <p>createdDate :{{employeeForm.createdDate().invalid()}}</p>
+
+    </form>
+
+</div> 
