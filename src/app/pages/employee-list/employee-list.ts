@@ -9,10 +9,10 @@ import { EmployeeModel } from '../../core/model/Classes/Employee.model';
 import { EmployeeService } from '../../core/Services/employee-service';
 
 @Component({
-  imports: [MatIconModule, MatTableModule, MatButtonModule, CommonModule, RouterLink],
-  selector: 'app-employee-list',
-  styleUrl: './employee-list.scss',
-  templateUrl: './employee-list.html',
+    imports: [MatIconModule, MatTableModule, MatButtonModule, CommonModule, RouterLink],
+    selector: 'app-employee-list',
+    styleUrl: './employee-list.scss',
+    templateUrl: './employee-list.html',
 })
 export class EmployeeList {
 
@@ -22,38 +22,28 @@ export class EmployeeList {
         'employeeName',
         'contactNo',
         'emailId',
+        'deptId',
         'gender',
         'role',
         'createdDate',
         'actions'
     ];
 
-    // dataSource = [
-    //     {
-    //         employeeId: 4542,
-    //         employeeName: 'Poojaa',
-    //         contactNo: '999933333333',
-    //         emailId: 'abc124@gmail.com',
-    //         gender: 'Female',
-    //         role: 'Employee',
-    //         createdDate: '2026-09-18'
-    //     },
-    //     {
-    //         employeeId: 4543,
-    //         employeeName: 'Ravi Kumar',
-    //         contactNo: '9876543210',
-    //         emailId: 'ravi@gmail.com',
-    //         gender: 'Male',
-    //         role: 'Manager',
-    //         createdDate: '2026-09-19'
-    //     }
-    // ];
+    employeeList$: Observable<EmployeeModel[]> = new Observable<EmployeeModel[]>
+    emplyeeService = inject(EmployeeService)
 
-
-    employeeList$ :Observable<EmployeeModel[]>=new Observable<EmployeeModel[]>
-    emplyeeService=inject(EmployeeService)
-
-    constructor(){
-        this.employeeList$= this.emplyeeService.gteAllEmployees()
+    constructor() {
+        this.employeeList$ = this.emplyeeService.gteAllEmployees()
+    }
+    
+    onDelete(employeeId: number): void {
+        this.emplyeeService.deleteEmployee(employeeId).subscribe({
+            next: (response) => {
+                console.log('Employee deleted successfully', response);
+            },
+            error: (error) => {
+                console.error('Delete failed:', error);
+            }
+        });
     }
 }

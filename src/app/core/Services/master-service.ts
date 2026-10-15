@@ -16,4 +16,5 @@ export class MasterService {
     getAllChildDeptByParentId():Observable<IApiResponseModel>{
         return this.http.get<IApiResponseModel>(environment.API_URL+"GetChildDepartmentByParentId?deptId="+1    )
     }
+   
 }

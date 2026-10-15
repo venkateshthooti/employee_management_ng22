@@ -209,7 +209,7 @@
                         }
 
                     </mat-form-field>
-                    
+
                     <!-- Role -->
                     <mat-form-field appearance="outline">
 
@@ -253,11 +253,22 @@
 
             <mat-card-actions align="end">
 
+                @if (currentEmpId == 0) {
                 <button mat-raised-button color="primary" type="submit"
                     [disabled]="employeeForm().invalid() || isSubmitting()">
                     <mat-icon>save</mat-icon>
                     {{ isSubmitting() ? 'Saving...' : 'Create Employee' }}
                 </button>
+                } 
+                @else {
+                <button mat-raised-button color="warn" type="submit"
+                    [disabled]="employeeForm().invalid() || isSubmitting()">
+                    <mat-icon>save</mat-icon>
+                    {{ isSubmitting() ? 'Updating...' : 'Update Employee' }}
+                </button>
+                }
+
+
 
                 <button mat-button type="button" (click)="goBack()">
 
@@ -267,17 +278,17 @@
 
             </mat-card-actions>
         </mat-card>
-     <p>  employeeId :{{employeeForm.employeeId().invalid()}}</p>
-      <p>employeeName : {{employeeForm.employeeName().invalid()}}</p> 
-      
-      <p>employeeName : {{employeeForm.employeeName().invalid()}}</p>
-      <p>employeeName L: {{employeeForm.employeeName().invalid()}}</p>
-       <p>deptId: {{employeeForm.deptId().invalid()}}</p>
-      <p>password : {{employeeForm.password().invalid()}}</p>
-      <p> gender :{{employeeForm.gender().invalid()}}</p>
-       <p>role: {{employeeForm.role().invalid()}}</p>
-       <p>createdDate :{{employeeForm.createdDate().invalid()}}</p>
+        <p> employeeId :{{employeeForm.employeeId().invalid()}}</p>
+        <p>employeeName : {{employeeForm.employeeName().invalid()}}</p>
+
+        <p>employeeName : {{employeeForm.employeeName().invalid()}}</p>
+        <p>employeeName L: {{employeeForm.employeeName().invalid()}}</p>
+        <p>deptId: {{employeeForm.deptId().invalid()}}</p>
+        <p>password : {{employeeForm.password().invalid()}}</p>
+        <p> gender :{{employeeForm.gender().invalid()}}</p>
+        <p>role: {{employeeForm.role().invalid()}}</p>
+        <p>createdDate :{{employeeForm.createdDate().invalid()}}</p>
 
     </form>
 
-</div> 
+</div>
