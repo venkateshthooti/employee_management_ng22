@@ -7,7 +7,7 @@
             <p>Manage all employees</p>
         </div>
 
-        <button mat-raised-button color="primary" routerLink="/admin/new-employee">
+        <button mat-raised-button color="primary" routerLink="/admin/new-employee/0">
             <mat-icon>add</mat-icon>
             Add Employee
         </button>
@@ -22,7 +22,7 @@
             <ng-container matColumnDef="employeeId">
 
                 <th mat-header-cell *matHeaderCellDef>
-                    ID
+                   employeeId
                 </th>
 
                 <td mat-cell *matCellDef="let employee">
@@ -66,6 +66,19 @@
 
                 <td mat-cell *matCellDef="let employee">
                     {{ employee.emailId }}
+                </td>
+
+            </ng-container>
+
+                <!-- DeptId -->
+            <ng-container matColumnDef="deptId">
+
+                <th mat-header-cell *matHeaderCellDef>
+                    deptId
+                </th>
+
+                <td mat-cell *matCellDef="let employee">
+                    {{ employee.deptId }}
                 </td>
 
             </ng-container>
@@ -121,7 +134,8 @@
                     <button
                         mat-icon-button
                         color="primary"
-                        aria-label="Edit employee">
+                        aria-label="Edit employee"
+                        routerLink="/admin/Edit-employee/{{employee.employeeId}}">
 
                         <mat-icon>edit</mat-icon>
 
@@ -130,7 +144,8 @@
                     <button
                         mat-icon-button
                         color="warn"
-                        aria-label="Delete employee">
+                        aria-label="Delete employee"
+                        (click)="onDelete(employee.employeeId)">
 
                         <mat-icon>delete</mat-icon>
 
