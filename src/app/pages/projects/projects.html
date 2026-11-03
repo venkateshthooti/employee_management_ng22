@@ -1,1 +1,351 @@
-<p>projects works!</p>
+<div class="project-page">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div>
+            <h2>Project Management</h2>
+            <p>Manage all your projects in one place</p>
+        </div>
+
+        @if (!showProjectForm()) {
+        <button mat-flat-button color="primary" (click)="onAddProject()">
+
+            <mat-icon>add</mat-icon>
+            Add Project
+        </button>
+        }
+    </div>
+
+    <!-- Project Form -->
+    @if (showProjectForm()) {
+
+    <div class="project-form-container">
+        <mat-card appearance="outlined" class="project-card">
+
+            <mat-card-header>
+                <mat-card-title>Create Project</mat-card-title>
+                <mat-card-subtitle>
+                    Add a new project to the system
+                </mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Project Name</mat-label>
+                        <input matInput formControlName="projectName" placeholder="Enter project name">
+
+                        @if (f['projectName'].touched &&
+                        f['projectName'].hasError('required')) {
+                        <mat-error>Project name is required</mat-error>
+                        }
+
+                        @if (f['projectName'].touched &&
+                        f['projectName'].hasError('minlength')) {
+                        <mat-error>Minimum 3 characters required</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Client Name</mat-label>
+                        <input matInput formControlName="clientName" placeholder="Enter client name">
+                    </mat-form-field>
+                    <!-- 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput type="date" formControlName="startDate">
+                    </mat-form-field> -->
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="startDatePicker" formControlName="startDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lead Employee ID</mat-label>
+
+                        <mat-select formControlName="leadByEmpId" placeholder="Select employee">
+                            <!-- <mat-option [value]="0">
+                                Select employee
+                            </mat-option> -->
+                            @for (item of empList(); track item.employeeId) {
+                            <mat-option [value]="item.employeeId">
+                                {{ item.employeeName }}
+                            </mat-option>
+                            }
+
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contact Person</mat-label>
+                        <input matInput formControlName="contactPerson" placeholder="Enter contact person">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contact Number</mat-label>
+                        <input matInput type="tel" formControlName="contactNo" maxlength="10">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Address</mat-label>
+                        <input matInput type="email" formControlName="emailId" placeholder="Enter email address">
+                    </mat-form-field>
+
+                    <div class="form-actions">
+
+                        <button mat-stroked-button type="button" (click)="onCancel()">
+                            Cancel
+                        </button>
+
+                        <!-- <button mat-stroked-button type="button" (click)="initializeForm()">
+                            Reset
+                        </button> -->
+
+                        <button mat-flat-button color="primary" type="submit" [disabled]="projectForm.invalid">
+                            Create Project
+                        </button>
+                    </div>
+
+                </form>
+            </mat-card-content>
+
+        </mat-card>
+    </div>
+
+    } @else {
+
+    <!-- Project List -->
+    <mat-card appearance="outlined" class="project-list-card">
+
+        <mat-card-header>
+            <mat-card-title>All Projects</mat-card-title>
+            <mat-card-subtitle>
+                Total projects: {{ projectList().length }}
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            @if (projectList().length > 0) {
+
+            <div class="project-grid">
+
+                @for (project of projectList(); track project.projectId) {
+
+                <mat-card appearance="outlined" class="project-item-card">
+
+                    <mat-card-header>
+                        <div mat-card-avatar class="project-avatar">
+                            <mat-icon>folder</mat-icon>
+                        </div>
+
+                        <mat-card-title>
+                            Project Name: {{ project.projectName }}
+                        </mat-card-title>
+
+                        <mat-card-subtitle>
+                            Project ID: {{ project.projectId }}
+                        </mat-card-subtitle>
+                    </mat-card-header>
+
+                    <mat-card-content>
+
+                        <div class="project-detail">
+                            <mat-icon>business</mat-icon>
+                            <span>
+                                <strong>Client:</strong> {{ project.clientName }}
+                            </span>
+                        </div>
+
+                        <div class="project-detail">
+                            <mat-icon>calendar_month</mat-icon>
+                            <span>
+                                <strong>Start Date:</strong> {{ project.startDate | date :'dd-MMM-yy' }}
+                            </span>
+                        </div>
+
+                        <div class="project-detail">
+                            <mat-icon>person</mat-icon>
+                            <span>
+                                <strong>Contact Person:</strong>
+                                {{ project.contactPerson }}
+                            </span>
+                        </div>
+
+                        <div class="project-detail">
+                            <mat-icon>phone</mat-icon>
+                            <span>
+                                <strong>Contact No:</strong> {{ project.contactNo }}
+                            </span>
+                        </div>
+                        <div class="project-detail">
+                            <mat-icon>person</mat-icon>
+                            <span>
+                                <strong>Lead Emp ID:</strong> {{ project.leadByEmpId }}
+                            </span>
+                        </div>
+                        <div class="project-detail">
+                            <mat-icon>person</mat-icon>
+                            <span>
+                                <strong>Lead Emp Name:</strong> {{ project.employeeName }}
+                            </span>
+                        </div>
+
+                    </mat-card-content>
+
+                    <mat-card-actions align="end">
+                        <button mat-button color="primary" (click)="openAddEmployeeDialog(project)">
+                            <mat-icon>person</mat-icon>
+                            Add Employee
+                        </button>
+                        <button mat-button color="primary">
+                            <mat-icon>edit</mat-icon>
+                            Edit
+                        </button>
+                        <button mat-button color="primary">
+                            <mat-icon>delete</mat-icon>
+                            Delete
+                        </button>
+
+                    </mat-card-actions>
+                </mat-card>
+
+                }
+
+            </div>
+
+            } @else {
+
+            <div class="empty-state">
+                <mat-icon>folder_open</mat-icon>
+                <h3>No projects found</h3>
+                <p>Click Add Project to create your first project.</p>
+            </div>
+
+            }
+
+        </mat-card-content>
+
+
+
+    </mat-card>
+
+    }
+    <ng-template #addEmployeeDialogTemplate>
+        <h2 mat-dialog-title>
+            Assign Employee
+            @if (selectedProject) {
+            to {{ selectedProject.projectName }}
+            }
+        </h2>
+
+        <form [formGroup]="employeeForm" (ngSubmit)="addEmployeeToProject()" class="dialog-form">
+            <mat-dialog-content>
+                <div class="form-row">
+                    <mat-form-field appearance="outline" class="employee-field">
+                        <mat-label>Employee</mat-label>
+                        <mat-select formControlName="empId" placeholder="Select employee"
+                            (selectionChange)="selectEmployee($event.value)">
+                            <!-- <mat-option [value]="0">
+                                Select employee
+                            </mat-option> -->
+                            @for (item of empList(); track item.employeeId) {
+                            <mat-option [value]="item.employeeId">
+                                {{ item.employeeName }}
+                            </mat-option>
+                            }
+
+                        </mat-select>
+                        @if (employeeForm.controls['empId'].touched &&
+                        employeeForm.controls['empId'].hasError('required')) {
+                        <mat-error>Employee name is required</mat-error>
+                        }
+
+                        @if (employeeForm.controls['empId'].touched &&
+                        employeeForm.controls['empId'].hasError('min')) {
+                        <mat-error>Minimum length is not met</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <!-- <mat-form-field appearance="outline">
+                        <mat-label>Assigned Date</mat-label>
+                        <input matInput type="datetime-local" formControlName="assignedDate">
+                    </mat-form-field> -->
+                     <mat-form-field appearance="outline">
+                        <mat-label>Assigned Date</mat-label>
+                        <input matInput [matDatepicker]="assignedDatePicker" formControlName="assignedDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="assignedDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #assignedDatePicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Role</mat-label>
+                        <input matInput formControlName="role">
+                        @if (employeeForm.controls['role'].touched &&
+                        employeeForm.controls['role'].hasError('required')) {
+                        <mat-error>Role is required</mat-error>
+                        }
+                    </mat-form-field>
+
+                    <label class="active-checkbox">
+                        <input type="checkbox" formControlName="isActive">
+                        Active
+                    </label>
+
+                    <button mat-flat-button color="primary" type="submit">
+                        <mat-icon>person_add</mat-icon>
+                        Add
+                    </button>
+                </div>
+
+
+                <div class="employee-table-container">
+                    <table class="employee-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee Name</th>
+                                <th>Project Id</th>
+                                <th>Role</th>
+                                <th>AssignedDate</th>
+                                <th>Is Active Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (employee of currentSelectedProjectEmps(); track employee.empProjectId ||
+                            employee.empId) {
+                            <tr [class.selected-employee-row]="selectedEmployee()?.employeeId === employee.empId">
+                                <td>{{ employee.empId }}</td>
+                                <td>{{ employee.employeeName }}</td>
+                                <td>{{ employee.projectId }}</td>
+                                <td>{{ employee.role }}</td>
+                                <td>{{ employee.assignedDate | date : 'dd/MMM/yy'}}</td>
+                                <td>{{ employee.isActive}}</td>
+                                <td>
+                                    <button mat-button type="button" color="primary" (click)="removeEmployee(employee)">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            }@empty{
+                            <tr>
+                                <td class="text-center" colspan="6">No employees assigned yet</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </mat-dialog-content>
+
+            <mat-dialog-actions align="end">
+                <button mat-button color="primary" mat-dialog-close>Close</button>
+            </mat-dialog-actions>
+        </form>
+    </ng-template>
+
+</div>

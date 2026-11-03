@@ -167,8 +167,10 @@ mat-toolbar {
     min-width: 0;
     padding: 24px;
     box-sizing: border-box;
+
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
+    //overflow: hidden;
 }
 
 :host {
@@ -193,10 +195,4 @@ mat-sidenav-content {
 
 mat-toolbar {
   flex-shrink: 0;
-}
-
-.content {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow: hidden;
 }
