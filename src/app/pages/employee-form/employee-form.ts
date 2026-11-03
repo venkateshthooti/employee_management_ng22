@@ -183,6 +183,7 @@ export class EmployeeForm implements OnInit {
                     this.formSuccess.set('Employee created successfully.');
                     alert(this.formSuccess())
                     this.isSubmitting.set(false);
+                    this.router.navigateByUrl("/admin/empoyee-list")
                 },
                 error: (error: HttpErrorResponse) => {
                     const apiMessage = typeof error.error === 'object' && error.error !== null

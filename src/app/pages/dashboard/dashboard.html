@@ -1,1 +1,141 @@
-<p>dashboard works!</p>
+<main class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <p class="eyebrow">OVERVIEW</p>
+      <h1>Dashboard</h1>
+      <p class="dashboard-subtitle">A snapshot of your employees and projects.</p>
+    </div>
+    <button class="refresh-button" type="button" (click)="loadDashboard()" [disabled]="loading()">
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+  </header>
+
+  @if (loading()) {
+  <section class="status-card" aria-live="polite">
+    <span class="loading-indicator"></span>
+    <span>Loading dashboard...</span>
+  </section>
+  } @else if (errorMessage()) {
+  <section class="status-card error-card" role="alert">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ errorMessage() }}</span>
+    <button class="retry-button" type="button" (click)="loadDashboard()">Try again</button>
+  </section>
+  } @else if (dashboardData(); as dashboard) {
+  <section class="summary-grid" aria-label="Summary">
+    <article class="summary-card employee-summary">
+      <div class="summary-icon"><mat-icon>groups</mat-icon></div>
+      <div>
+        <p>Total Employees</p>
+        <strong>{{ dashboard.totalEmployee | number }}</strong>
+      </div>
+      <span class="summary-label">Employees</span>
+    </article>
+
+    <article class="summary-card project-summary">
+      <div class="summary-icon"><mat-icon>folder_open</mat-icon></div>
+      <div>
+        <p>Total Projects</p>
+        <strong>{{ dashboard.totalProject | number }}</strong>
+      </div>
+      <span class="summary-label">Projects</span>
+    </article>
+  </section>
+
+  <section class="records-grid">
+    <article class="records-card">
+      <div class="section-heading">
+        <div class="section-icon employee-heading-icon"><mat-icon>person_add</mat-icon></div>
+        <div>
+          <h2>Recent Employees</h2>
+          <p>Latest employees added to the system</p>
+        </div>
+        <span class="record-count">{{ dashboard.recentEmployee.length }}</span>
+      </div>
+
+      @if (dashboard.recentEmployee.length > 0) {
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Role</th>
+              <th>Added</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (employee of dashboard.recentEmployee; track employee.employeeId) {
+            <tr>
+              <td>
+                <div class="person-cell">
+                  <span class="person-avatar">{{ employee.employeeName.charAt(0).toUpperCase() }}</span>
+                  <span>
+                    <strong>{{ employee.employeeName }}</strong>
+                    <small>ID {{ employee.employeeId }}</small>
+                  </span>
+                </div>
+              </td>
+              <td>{{ employee.contactNo }}</td>
+              <td>{{ employee.emailId }}</td>
+              <td>Department {{ employee.deptId }}</td>
+              <td><span class="role-badge">{{ employee.role }}</span></td>
+              <td>{{ employee.createdDate | date:'dd MMM yyyy' }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      } @else {
+      <div class="empty-state">No recent employees to show.</div>
+      }
+    </article>
+
+    <article class="records-card">
+      <div class="section-heading">
+        <div class="section-icon project-heading-icon"><mat-icon>work_outline</mat-icon></div>
+        <div>
+          <h2>Recent Projects</h2>
+          <p>Latest projects in your organization</p>
+        </div>
+        <span class="record-count">{{ dashboard.recentProjects.length }}</span>
+      </div>
+
+      @if (dashboard.recentProjects.length > 0) {
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th>Client</th>
+              <th>Project Lead</th>
+              <th>Start Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (project of dashboard.recentProjects; track project.projectId) {
+            <tr>
+              <td>
+                <div class="project-cell">
+                  <strong>{{ project.projectName }}</strong>
+                  <small>ID {{ project.projectId }}</small>
+                </div>
+              </td>
+              <td>{{ project.clientName }}</td>
+              <td>Employee {{ project.leadByEmpId }}</td>
+              <td>{{ project.startDate | date:'dd MMM yyyy' }}</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      } @else {
+      <div class="empty-state">No recent projects to show.</div>
+      }
+    </article>
+  </section>
+  }
+</main>
